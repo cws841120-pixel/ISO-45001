@@ -1,0 +1,1365 @@
+// 기본 데이터 (P-AUDIT ISO 45001 사후관리심사). 처음 접속하거나 '초기화'할 때 사용됩니다.
+window.SEED = {
+ "groups": [
+  {
+   "code": "4",
+   "name": "조직상황"
+  },
+  {
+   "code": "5",
+   "name": "리더십"
+  },
+  {
+   "code": "6",
+   "name": "기획"
+  },
+  {
+   "code": "7",
+   "name": "지원"
+  },
+  {
+   "code": "8",
+   "name": "운영"
+  },
+  {
+   "code": "9",
+   "name": "성과평가"
+  },
+  {
+   "code": "10",
+   "name": "개선"
+  }
+ ],
+ "prep": [
+  {
+   "id": 1,
+   "clause": "4.1",
+   "grp": "4",
+   "title": "내·외부 이슈 목록 최신화",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 2,
+   "clause": "4.2",
+   "grp": "4",
+   "title": "이해관계자 요구사항 목록 갱신",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 3,
+   "clause": "4.3",
+   "grp": "4",
+   "title": "인증 적용범위 문구 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 4,
+   "clause": "4.4",
+   "grp": "4",
+   "title": "프로세스 상호작용도 점검",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 5,
+   "clause": "5.1",
+   "grp": "5",
+   "title": "경영진 인터뷰 대비",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 6,
+   "clause": "5.2",
+   "grp": "5",
+   "title": "안전보건방침 게시·전달 상태 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 7,
+   "clause": "5.3",
+   "grp": "5",
+   "title": "역할·책임·권한 문서와 실제 인사 일치",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 8,
+   "clause": "5.4",
+   "grp": "5",
+   "title": "근로자 협의·참여 실적 정리",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 9,
+   "clause": "6.1.1",
+   "grp": "6",
+   "title": "리스크·기회 관리 프로세스 실행 증거",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 10,
+   "clause": "6.1.2.1",
+   "grp": "6",
+   "title": "위험요인 파악 범위 점검",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 11,
+   "clause": "6.1.2.2",
+   "grp": "6",
+   "title": "위험성평가 연간 실시 및 변경 시 실시",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 12,
+   "clause": "6.1.2.3",
+   "grp": "6",
+   "title": "안전보건 기회 도출 기록",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 13,
+   "clause": "6.1.3",
+   "grp": "6",
+   "title": "법규 등록부 최신화 + 개정 반영",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 14,
+   "clause": "6.1.4",
+   "grp": "6",
+   "title": "조치계획과 실행결과 연결",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 15,
+   "clause": "6.2.1",
+   "grp": "6",
+   "title": "안전보건목표의 측정가능성 점검",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 16,
+   "clause": "6.2.2",
+   "grp": "6",
+   "title": "목표 달성계획의 5요소 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 17,
+   "clause": "7.1",
+   "grp": "7",
+   "title": "안전보건 예산·인력 집행 실적",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 18,
+   "clause": "7.2",
+   "grp": "7",
+   "title": "적격성(자격) 대장 최신화",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 19,
+   "clause": "7.2",
+   "grp": "7",
+   "title": "교육훈련 계획 대비 실적 정리",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 20,
+   "clause": "7.3",
+   "grp": "7",
+   "title": "근로자 인식 수준 확인 (인터뷰 대비)",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 21,
+   "clause": "7.4",
+   "grp": "7",
+   "title": "내·외부 의사소통 기록 정리",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 22,
+   "clause": "7.5.2",
+   "grp": "7",
+   "title": "문서 제·개정 이력 정비",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 23,
+   "clause": "7.5.3",
+   "grp": "7",
+   "title": "최신본 배포·구본 회수 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 24,
+   "clause": "8.1.1",
+   "grp": "8",
+   "title": "작업허가·작업표준 이행 증거",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 25,
+   "clause": "8.1.2",
+   "grp": "8",
+   "title": "위험 제거·감소 위계 적용 사례",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 26,
+   "clause": "8.1.3",
+   "grp": "8",
+   "title": "변경관리 실적 정리",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 27,
+   "clause": "8.1.4.1",
+   "grp": "8",
+   "title": "조달 시 안전보건 요건 반영",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 28,
+   "clause": "8.1.4.2",
+   "grp": "8",
+   "title": "도급·협력사 안전관리 평가",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 29,
+   "clause": "8.1.4.3",
+   "grp": "8",
+   "title": "외주처리 관리 기준 확인",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 30,
+   "clause": "8.2",
+   "grp": "8",
+   "title": "비상사태 대비 훈련 실시 및 평가",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 31,
+   "clause": "9.1.1",
+   "grp": "9",
+   "title": "모니터링·측정 계획과 결과",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 32,
+   "clause": "9.1.1",
+   "grp": "9",
+   "title": "측정장비 교정 기록 확인",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 33,
+   "clause": "9.1.2",
+   "grp": "9",
+   "title": "준수평가 실시 결과",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 34,
+   "clause": "9.2.1",
+   "grp": "9",
+   "title": "내부심사 계획 수립",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 35,
+   "clause": "9.2.2",
+   "grp": "9",
+   "title": "내부심사 결과 보고 및 후속조치",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 36,
+   "clause": "9.3",
+   "grp": "9",
+   "title": "경영검토 입력·출력 사항 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 37,
+   "clause": "10.1",
+   "grp": "10",
+   "title": "개선 기회 도출 기록",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 38,
+   "clause": "10.2",
+   "grp": "10",
+   "title": "사건 조사 보고서 정리",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 39,
+   "clause": "10.2",
+   "grp": "10",
+   "title": "시정조치 효과성 검토",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 40,
+   "clause": "10.3",
+   "grp": "10",
+   "title": "지속적 개선 실적 정리",
+   "freq": false,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  },
+  {
+   "id": 41,
+   "clause": "-",
+   "grp": "-",
+   "title": "직전 심사 지적사항 조치 완료 확인",
+   "freq": true,
+   "status": "미착수",
+   "owner": "",
+   "due": "",
+   "memo": ""
+  }
+ ],
+ "evid": [
+  {
+   "id": 1,
+   "clause": "4.1",
+   "grp": "4",
+   "doc": "내·외부 이슈 분석서",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 2,
+   "clause": "4.2",
+   "grp": "4",
+   "doc": "이해관계자 요구사항 목록",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 3,
+   "clause": "4.3",
+   "grp": "4",
+   "doc": "적용범위 기술서 / 인증서 사본",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 4,
+   "clause": "4.4",
+   "grp": "4",
+   "doc": "프로세스 맵(상호작용도)",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 5,
+   "clause": "5.1",
+   "grp": "5",
+   "doc": "경영진 안전보건 활동 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 6,
+   "clause": "5.2",
+   "grp": "5",
+   "doc": "안전보건방침",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 7,
+   "clause": "5.3",
+   "grp": "5",
+   "doc": "조직도 및 안전보건 직무분장표",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 8,
+   "clause": "5.3",
+   "grp": "5",
+   "doc": "법정 선임 서류 (안전관리자·보건관리자 등)",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 9,
+   "clause": "5.4",
+   "grp": "5",
+   "doc": "산업안전보건위원회 회의록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 10,
+   "clause": "5.4",
+   "grp": "5",
+   "doc": "근로자 제안·참여 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 11,
+   "clause": "6.1.1",
+   "grp": "6",
+   "doc": "리스크·기회 관리 절차서",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 12,
+   "clause": "6.1.2.1",
+   "grp": "6",
+   "doc": "위험요인 목록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 13,
+   "clause": "6.1.2.2",
+   "grp": "6",
+   "doc": "위험성평가서 (정기·수시)",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 14,
+   "clause": "6.1.2.3",
+   "grp": "6",
+   "doc": "안전보건 기회 검토 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 15,
+   "clause": "6.1.3",
+   "grp": "6",
+   "doc": "법규 및 기타 요구사항 등록부",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 16,
+   "clause": "6.1.4",
+   "grp": "6",
+   "doc": "조치계획서 및 이행 결과",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 17,
+   "clause": "6.2.1",
+   "grp": "6",
+   "doc": "안전보건 목표 및 KPI",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 18,
+   "clause": "6.2.2",
+   "grp": "6",
+   "doc": "목표 추진계획서 및 실적",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 19,
+   "clause": "7.1",
+   "grp": "7",
+   "doc": "안전보건 예산 집행 내역",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 20,
+   "clause": "7.2",
+   "grp": "7",
+   "doc": "적격성(자격) 관리대장",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 21,
+   "clause": "7.2",
+   "grp": "7",
+   "doc": "교육훈련 계획 및 실적",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 22,
+   "clause": "7.2",
+   "grp": "7",
+   "doc": "교육 효과성 평가 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 23,
+   "clause": "7.3",
+   "grp": "7",
+   "doc": "안전보건 인식 교육 자료",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 24,
+   "clause": "7.4",
+   "grp": "7",
+   "doc": "의사소통 계획 및 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 25,
+   "clause": "7.5.1",
+   "grp": "7",
+   "doc": "문서 목록 (마스터 리스트)",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 26,
+   "clause": "7.5.2",
+   "grp": "7",
+   "doc": "문서 제·개정 이력",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 27,
+   "clause": "7.5.3",
+   "grp": "7",
+   "doc": "문서 배포·회수 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 28,
+   "clause": "8.1.1",
+   "grp": "8",
+   "doc": "작업허가서 발행 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 29,
+   "clause": "8.1.1",
+   "grp": "8",
+   "doc": "작업표준(SOP)",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 30,
+   "clause": "8.1.2",
+   "grp": "8",
+   "doc": "위험 감소 개선 사례",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 31,
+   "clause": "8.1.3",
+   "grp": "8",
+   "doc": "변경관리 검토서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 32,
+   "clause": "8.1.4.1",
+   "grp": "8",
+   "doc": "구매 안전보건 요건서",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 33,
+   "clause": "8.1.4.2",
+   "grp": "8",
+   "doc": "협력사 안전관리 평가표",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 34,
+   "clause": "8.1.4.2",
+   "grp": "8",
+   "doc": "도급 안전보건 협의체 회의록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 35,
+   "clause": "8.1.4.3",
+   "grp": "8",
+   "doc": "외주처리 관리 기준",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 36,
+   "clause": "8.2",
+   "grp": "8",
+   "doc": "비상조치계획서",
+   "keep": "유지",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 37,
+   "clause": "8.2",
+   "grp": "8",
+   "doc": "비상대응 훈련 결과 보고서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 38,
+   "clause": "9.1.1",
+   "grp": "9",
+   "doc": "모니터링·측정 결과 (작업환경측정·건강검진)",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 39,
+   "clause": "9.1.1",
+   "grp": "9",
+   "doc": "측정장비 교정 성적서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 40,
+   "clause": "9.1.2",
+   "grp": "9",
+   "doc": "법규 준수평가 결과서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 41,
+   "clause": "9.2.1",
+   "grp": "9",
+   "doc": "내부심사 계획서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 42,
+   "clause": "9.2.2",
+   "grp": "9",
+   "doc": "내부심사 결과 보고서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 43,
+   "clause": "9.2.2",
+   "grp": "9",
+   "doc": "내부심사원 자격 기록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 44,
+   "clause": "9.3",
+   "grp": "9",
+   "doc": "경영검토 보고서 및 회의록",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 45,
+   "clause": "10.2",
+   "grp": "10",
+   "doc": "사건(아차사고 포함) 조사 보고서",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 46,
+   "clause": "10.2",
+   "grp": "10",
+   "doc": "시정조치 요구서 및 결과",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 47,
+   "clause": "10.3",
+   "grp": "10",
+   "doc": "지속적 개선 실적 보고",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  },
+  {
+   "id": 48,
+   "clause": "-",
+   "grp": "-",
+   "doc": "직전 심사 보고서 및 지적사항 조치 결과",
+   "keep": "보유",
+   "status": "없음",
+   "location": "",
+   "owner": "",
+   "revised": "",
+   "memo": ""
+  }
+ ],
+ "qa": [
+  {
+   "id": 1,
+   "clause": "4.1",
+   "grp": "4",
+   "question": "작년 심사 이후 회사 내·외부 이슈에 어떤 변화가 있었습니까?",
+   "answer": "이슈 분석서 갱신일과 신규 이슈 1~2개 제시",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 2,
+   "clause": "4.2",
+   "grp": "4",
+   "question": "근로자와 협력사의 요구사항은 어떻게 파악하고 반영합니까?",
+   "answer": "산안위·간담회 기록과 반영 사례",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 3,
+   "clause": "4.3",
+   "grp": "4",
+   "question": "적용범위에 변동(사업장·공정 추가)이 있었습니까?",
+   "answer": "적용범위 기술서와 인증서 문구 비교",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 4,
+   "clause": "5.1",
+   "grp": "5",
+   "question": "최고경영자는 안전보건에 대해 어떤 리더십을 보였습니까?",
+   "answer": "경영진 현장점검·회의 주재 기록",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 5,
+   "clause": "5.1",
+   "grp": "5",
+   "question": "안전보건 성과에 대한 책임을 어떻게 지고 계십니까?",
+   "answer": "KPI 평가 반영 및 경영검토 결과",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 6,
+   "clause": "5.2",
+   "grp": "5",
+   "question": "안전보건방침을 근로자가 알고 있습니까?",
+   "answer": "게시 위치·교육 기록, 인터뷰 대비",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 7,
+   "clause": "5.3",
+   "grp": "5",
+   "question": "안전관리자·보건관리자 선임 현황은 최신입니까?",
+   "answer": "선임 서류와 조직도 일치 확인",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 8,
+   "clause": "5.4",
+   "grp": "5",
+   "question": "근로자는 어떤 방식으로 협의·참여합니까?",
+   "answer": "산안위 회의록, 제안제도 실적",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 9,
+   "clause": "5.4",
+   "grp": "5",
+   "question": "비관리자 근로자의 참여를 막는 장애요인은 어떻게 제거했습니까?",
+   "answer": "익명 제보·간담회 운영 사례",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 10,
+   "clause": "6.1.2.1",
+   "grp": "6",
+   "question": "위험요인 파악에 비정상 작업과 협력사 작업이 포함됩니까?",
+   "answer": "위험요인 목록의 범위 제시",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 11,
+   "clause": "6.1.2.2",
+   "grp": "6",
+   "question": "위험성평가는 언제 실시했고 변경 시 수시평가를 했습니까?",
+   "answer": "정기·수시 평가서와 변경 사례",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 12,
+   "clause": "6.1.3",
+   "grp": "6",
+   "question": "최근 개정된 법규를 어떻게 파악하고 반영했습니까?",
+   "answer": "법규 등록부 개정 반영 이력",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 13,
+   "clause": "6.1.4",
+   "grp": "6",
+   "question": "위험성평가 결과가 조치계획으로 어떻게 연결됩니까?",
+   "answer": "조치계획서와 완료 증빙",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 14,
+   "clause": "6.2.1",
+   "grp": "6",
+   "question": "올해 안전보건 목표는 무엇이며 측정 가능합니까?",
+   "answer": "목표·KPI 수치와 측정 방법",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 15,
+   "clause": "6.2.2",
+   "grp": "6",
+   "question": "목표 달성계획에 책임자·기한·자원이 정해져 있습니까?",
+   "answer": "추진계획서의 5요소",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 16,
+   "clause": "7.1",
+   "grp": "7",
+   "question": "안전보건 예산은 계획 대비 얼마나 집행했습니까?",
+   "answer": "예산 집행 내역",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 17,
+   "clause": "7.2",
+   "grp": "7",
+   "question": "위험작업 종사자의 자격은 어떻게 관리합니까?",
+   "answer": "적격성 관리대장",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 18,
+   "clause": "7.2",
+   "grp": "7",
+   "question": "교육 효과성은 어떻게 평가합니까?",
+   "answer": "평가 기록과 개선 사례",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 19,
+   "clause": "7.3",
+   "grp": "7",
+   "question": "근로자가 작업 중지 권한을 알고 있습니까?",
+   "answer": "인식 교육 자료, 인터뷰 대비",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 20,
+   "clause": "7.4",
+   "grp": "7",
+   "question": "협력사·방문자에게 안전보건 정보를 어떻게 전달합니까?",
+   "answer": "의사소통 계획과 기록",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 21,
+   "clause": "7.5",
+   "grp": "7",
+   "question": "문서의 최신본 관리와 구본 회수는 어떻게 합니까?",
+   "answer": "마스터 리스트, 배포·회수 기록",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 22,
+   "clause": "8.1.1",
+   "grp": "8",
+   "question": "작업허가제는 어떻게 운영되고 있습니까?",
+   "answer": "허가서 발행 기록과 현장 확인",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 23,
+   "clause": "8.1.2",
+   "grp": "8",
+   "question": "위험 감소 위계(제거→대체→공학적→관리적→보호구)를 적용한 사례는?",
+   "answer": "개선 사례 1~2건",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 24,
+   "clause": "8.1.3",
+   "grp": "8",
+   "question": "설비·공정 변경 시 안전보건 검토를 했습니까?",
+   "answer": "변경관리 검토서",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 25,
+   "clause": "8.1.4",
+   "grp": "8",
+   "question": "협력사 안전관리 수준은 어떻게 평가하고 관리합니까?",
+   "answer": "평가표, 협의체 회의록",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 26,
+   "clause": "8.2",
+   "grp": "8",
+   "question": "비상대응 훈련을 실시하고 결과를 평가했습니까?",
+   "answer": "훈련 결과 보고서와 개선사항",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 27,
+   "clause": "9.1.1",
+   "grp": "9",
+   "question": "작업환경측정과 건강검진 결과의 후속조치는?",
+   "answer": "측정·검진 결과와 조치 내역",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 28,
+   "clause": "9.1.2",
+   "grp": "9",
+   "question": "법규 준수평가는 언제 했고 결과는 어떻습니까?",
+   "answer": "준수평가 결과서",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 29,
+   "clause": "9.2",
+   "grp": "9",
+   "question": "내부심사는 언제 했고 지적사항은 어떻게 처리했습니까?",
+   "answer": "내부심사 보고서와 시정조치",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 30,
+   "clause": "9.3",
+   "grp": "9",
+   "question": "경영검토에서 어떤 결정이 나왔습니까?",
+   "answer": "경영검토 회의록의 출력사항",
+   "status": "미준비",
+   "owner": ""
+  },
+  {
+   "id": 31,
+   "clause": "10.2",
+   "grp": "10",
+   "question": "사고·아차사고 발생 시 원인조사와 재발방지는 어떻게 합니까?",
+   "answer": "조사 보고서와 효과성 검토",
+   "status": "미준비",
+   "owner": ""
+  }
+ ],
+ "nc": [
+  {
+   "id": 1,
+   "source": "직전 심사",
+   "grade": "경부적합",
+   "clause": "7.2",
+   "description": "(예시) 신규 입사자 안전교육 기록 일부 누락",
+   "cause": "교육 기록 관리 절차 미준수",
+   "action": "교육 이력 전수 점검 및 누락분 보완",
+   "owner": "",
+   "due": "__TODAY+14__",
+   "status": "조치중"
+  }
+ ],
+ "settings": {
+  "auditDate": "",
+  "cb": "",
+  "me": "",
+  "scope": ""
+ }
+};
