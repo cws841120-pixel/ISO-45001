@@ -1,4 +1,4 @@
-// P-AUDIT ISO 45001 사후관리심사 준비 (웹 버전)
+// 본사 ISO 45001 운영 프로그램 (포스코인터내셔널 안전기획실, 웹 버전)
 // 데이터는 이 브라우저의 localStorage에만 저장됩니다. 서버로 전송되지 않습니다.
 (function () {
   "use strict";
@@ -367,7 +367,7 @@
     const blob = new Blob([JSON.stringify(S, null, 1)], { type: "application/json" });
     const a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "P-AUDIT_백업_" + today() + ".json";
+    a.download = "ISO45001_백업_" + today() + ".json";
     document.body.appendChild(a); a.click(); a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 1000);
   }
@@ -379,7 +379,7 @@
         if (!s.prep || !s.evid || !s.qa || !s.nc) throw new Error("bad");
         if (!confirm("지금 화면의 데이터를 백업 파일 내용으로 바꿉니다. 계속할까요?")) return;
         S = Object.assign(fresh(), s); save(); toast("불러왔습니다."); render();
-      } catch (e) { toast("P-AUDIT 백업 파일이 아닙니다."); }
+      } catch (e) { toast("이 프로그램의 백업 파일이 아닙니다."); }
     };
     fr.readAsText(file, "utf-8");
   }

@@ -4,8 +4,8 @@ html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard
 button,input,select,textarea{font:inherit;color:inherit}
 .app{display:flex;min-height:100vh}
 .side{position:sticky;top:0;height:100vh;width:232px;flex:none;background:linear-gradient(180deg,#0B1F3A,#12305A);color:#fff;padding:22px 14px;display:flex;flex-direction:column}
-.logo{font-size:22px;font-weight:800;padding:0 10px}.logo span{color:#60A5FA}
-.sub{font-size:11.5px;color:#9FB3D1;padding:2px 10px 22px}
+.logo{font-size:19px;font-weight:800;line-height:1.3;padding:0 10px;word-break:keep-all}.logo span{color:#60A5FA}
+.sub{font-size:12px;color:#9FB3D1;padding:6px 10px 22px}
 .nav{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:0;border-radius:10px;background:none;font-size:14px;color:#C9D6EA;margin-bottom:4px;cursor:pointer;text-align:left}
 .nav:hover{background:rgba(255,255,255,.07)}
 .nav.on{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 4px 12px rgba(37,99,235,.4)}
