@@ -1,5 +1,6 @@
 // 본사 ISO 45001 운영 프로그램 (포스코인터내셔널 안전기획실, 웹 버전)
-// 데이터는 이 브라우저의 localStorage에만 저장됩니다. 서버로 전송되지 않습니다.
+// Supabase가 연결되어 있으면(/api/records) 모든 사용자가 같은 데이터를 공유하고,
+// 연결이 없으면 이 브라우저의 localStorage에만 저장합니다.
 (function () {
   "use strict";
 
@@ -37,8 +38,84 @@
   function save() {
     S.savedAt = new Date().toISOString();
     try { localStorage.setItem(KEY, JSON.stringify(S)); storageOk = true; }
-    catch (e) { storageOk = false; toast("이 브라우저에서는 저장할 수 없습니다. 백업 파일로 내려받아 두세요."); }
+    catch (e) { storageOk = false; if (cloud.mode !== "cloud") toast("이 브라우저에서는 저장할 수 없습니다. 백업 파일로 내려받아 두세요."); }
   }
+
+  // ---------- Supabase 공유 저장소 ----------
+  // mode: "checking" | "cloud"(공유) | "local"(브라우저 저장) | "error"(연결 실패, 브라우저에 임시 저장)
+  const CODE_KEY = KEY + "-code", ME_KEY = KEY + "-me";
+  const cloud = { mode: "checking", code: "", lastSync: null };
+  try { cloud.code = localStorage.getItem(CODE_KEY) || ""; } catch (e) { /* noop */ }
+  try { const me = localStorage.getItem(ME_KEY); if (me != null) S.settings.me = me; } catch (e) { /* noop */ }
+  const COLS = ["prep", "evid", "qa", "nc"];
+  const sharedSettings = () => { const o = Object.assign({}, S.settings); delete o.me; return o; };
+  function allRows() {
+    const rows = [];
+    COLS.forEach((k) => S[k].forEach((r) => rows.push({ kind: k, id: r.id, data: r })));
+    rows.push({ kind: "settings", id: 0, data: sharedSettings() });
+    return rows;
+  }
+  async function api(method, opts) {
+    const r = await fetch("/api/records" + ((opts && opts.query) || ""), {
+      method, cache: "no-store",
+      headers: Object.assign({ "x-app-code": cloud.code }, opts && opts.body ? { "Content-Type": "application/json" } : {}),
+      body: opts && opts.body ? JSON.stringify(opts.body) : undefined,
+    });
+    let j = null; try { j = await r.json(); } catch (e) { /* 비 JSON 응답 */ }
+    return { status: r.status, j };
+  }
+  function applyRows(rows) {
+    const me = S.settings.me;
+    const next = { groups: S.groups, prep: [], evid: [], qa: [], nc: [], settings: { auditDate: "", cb: "", me: "", scope: "" }, savedAt: "" };
+    rows.forEach((row) => {
+      if (row.kind === "settings") Object.assign(next.settings, row.data);
+      else if (next[row.kind]) next[row.kind].push(Object.assign({}, row.data, { id: Number(row.id) }));
+      if (row.updated_at && row.updated_at > next.savedAt) next.savedAt = row.updated_at;
+    });
+    COLS.forEach((k) => next[k].sort((a, b) => a.id - b.id));
+    next.settings.me = me;
+    S = next;
+  }
+  async function pull(first) {
+    let res;
+    try { res = await api("GET"); } catch (e) { res = { status: 0 }; }
+    if (res.status === 200) {
+      if (!res.j.rows.length) {
+        // 처음 연결: 지금 이 브라우저의 데이터(없으면 기본 항목)를 공유 저장소에 올립니다.
+        await push(allRows(), true);
+        toast("공유 저장소를 만들고 현재 데이터를 올렸습니다.");
+      } else applyRows(res.j.rows);
+      cloud.mode = "cloud"; cloud.lastSync = new Date(); save(); return true;
+    }
+    if (res.status === 401) {
+      const c = window.prompt(cloud.code ? "접속 코드가 맞지 않습니다. 다시 입력하세요." : "공유 데이터에 접속하려면 접속 코드를 입력하세요.");
+      if (c) { cloud.code = c.trim(); try { localStorage.setItem(CODE_KEY, cloud.code); } catch (e) { /* noop */ } return pull(first); }
+      cloud.mode = "error"; return false;
+    }
+    // 404(서버 함수 없음, 로컬 실행) · 503(Supabase 미설정) → 브라우저 저장 모드
+    if (first) cloud.mode = res.status === 404 || res.status === 503 ? "local" : "error";
+    else if (cloud.mode === "cloud") cloud.mode = "error";
+    return false;
+  }
+  async function push(rows, replace) {
+    if (cloud.mode !== "cloud" && !replace) return;
+    try {
+      const res = await api("POST", { body: { rows, replace: !!replace } });
+      if (res.status !== 200) throw new Error(res.status);
+      cloud.lastSync = new Date(); if (cloud.mode === "error") cloud.mode = "cloud";
+    } catch (e) { cloud.mode = "error"; toast("공유 저장소에 저장하지 못했습니다. 잠시 후 다시 시도하세요."); }
+    renderSide();
+  }
+  async function removeRemote(kind, id) {
+    if (cloud.mode !== "cloud") return;
+    try {
+      const res = await api("DELETE", { query: "?kind=" + kind + "&id=" + id });
+      if (res.status !== 200) throw new Error(res.status);
+      cloud.lastSync = new Date();
+    } catch (e) { cloud.mode = "error"; toast("공유 저장소에서 삭제하지 못했습니다."); }
+    renderSide();
+  }
+  const isEditing = () => ui.mode === "new" || !!(document.activeElement && document.activeElement.closest && document.activeElement.closest(".detail,.set"));
 
   // ---------- 공통 ----------
   const esc = (v) => String(v == null ? "" : v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -52,7 +129,8 @@
   const GRADE = { "중부적합": "red", "경부적합": "orange", "관찰사항": "blue", "개선권고": "violet" };
   const tag = (g) => `<span class="tag t-${GRADE[g] || "blue"}">${esc(g)}</span>`;
   const grpOf = (c) => (c && c !== "-" ? String(c).split(".")[0] : "-");
-  const nextId = (arr) => arr.reduce((m, r) => Math.max(m, r.id), 0) + 1;
+  // 공유 모드에서는 여러 사람이 동시에 등록해도 겹치지 않도록 시각 기반 번호를 씁니다.
+  const nextId = (arr) => (cloud.mode === "cloud" ? Date.now() * 100 + Math.floor(Math.random() * 100) : arr.reduce((m, r) => Math.max(m, r.id), 0) + 1);
   let toastT;
   function toast(msg) {
     const t = document.getElementById("toast");
@@ -207,7 +285,9 @@
       dday = n > 0 ? "D-" + n : n === 0 ? "D-DAY" : "D+" + -n;
       line = d + " (" + WD[new Date(d + "T00:00:00").getDay()] + ")" + (st.cb ? " · " + st.cb : "");
     }
-    document.getElementById("aud").innerHTML = `<div class="a1">심사 예정일</div><div class="a2">${dday}</div><div class="a3">${esc(line)}</div>`;
+    const SYNC = { checking: ["연결 확인 중…", "#9FB3D1"], cloud: ["● 공유 저장소 연결됨", "#4ADE80"], local: ["● 이 브라우저에만 저장", "#FBBF24"], error: ["● 공유 저장소 연결 끊김", "#F87171"] }[cloud.mode];
+    document.getElementById("aud").innerHTML = `<div class="a1">심사 예정일</div><div class="a2">${dday}</div><div class="a3">${esc(line)}</div>` +
+      `<div class="a3" style="margin-top:8px;color:${SYNC[1]}" title="${cloud.lastSync ? "마지막 동기화 " + cloud.lastSync.toLocaleTimeString("ko-KR") : ""}">${SYNC[0]}</div>`;
   }
 
   function header(title, sub, right) {
@@ -319,11 +399,13 @@
       if (key !== "nc") rec.grp = grpOf(rec.clause);
       S[key].push(rec);
       ui.sel[key] = rec.id; ui.mode = "";
+      push([{ kind: key, id: rec.id, data: rec }]);
       toast("등록했습니다.");
     } else {
       const rec = S[key].find((x) => x.id === ui.sel[key]);
       if (!rec) return;
       Object.assign(rec, data);
+      push([{ kind: key, id: rec.id, data: rec }]);
       toast("저장했습니다.");
     }
     save(); render();
@@ -346,7 +428,9 @@
       `<div class="pt" style="margin-top:18px">데이터 백업</div>` +
       `<div class="toolbar"><button class="btn sm" data-act="export">백업 파일 내려받기</button><button class="btn sm" data-act="import">백업 파일 불러오기</button><button class="btn sm del" data-act="reset">처음 상태로 초기화</button></div>` +
       `<input type="file" id="importFile" accept="application/json,.json" hidden>` +
-      `<div class="note">※ 입력한 내용은 지금 쓰는 브라우저에만 저장되며 서버로 보내지 않습니다. 다른 PC나 다른 사람과 이어서 쓰려면 백업 파일을 내려받아 전달하고 불러오세요.${storageOk ? "" : " <b style='color:var(--red)'>현재 이 브라우저는 저장이 막혀 있습니다.</b>"}</div>` +
+      (cloud.mode === "cloud"
+        ? `<div class="note">※ 입력한 내용은 공유 저장소(Supabase)에 저장되어 접속한 모든 사람이 같은 데이터를 봅니다. "내 이름"만 이 브라우저에 따로 저장됩니다. 백업 불러오기와 초기화는 모든 사람의 데이터를 바꿉니다.</div>`
+        : `<div class="note">※ 입력한 내용은 지금 쓰는 브라우저에만 저장되며 서버로 보내지 않습니다. 다른 PC나 다른 사람과 이어서 쓰려면 백업 파일을 내려받아 전달하고 불러오세요.${storageOk ? "" : " <b style='color:var(--red)'>현재 이 브라우저는 저장이 막혀 있습니다.</b>"}</div>`) +
       `</div><div style="display:grid;gap:16px">` +
       `<div class="card pane"><div class="pt">아직 남은 빈출 항목<span>${left.length}건 · 준비항목과 증빙</span></div><div class="blist">` +
       (left.length ? left.map((x) => `<div class="brow" data-open="${x.key}:${x.r.id}"><span class="k">${x.k}</span><span class="c">${esc(x.c)}</span><span class="t">${esc(x.t)}</span>${pill(x.r.status)}</div>`).join("") : `<div class="empty">남은 항목이 없습니다.</div>`) +
@@ -377,8 +461,10 @@
       try {
         const s = JSON.parse(fr.result);
         if (!s.prep || !s.evid || !s.qa || !s.nc) throw new Error("bad");
-        if (!confirm("지금 화면의 데이터를 백업 파일 내용으로 바꿉니다. 계속할까요?")) return;
-        S = Object.assign(fresh(), s); save(); toast("불러왔습니다."); render();
+        if (!confirm(cloud.mode === "cloud" ? "공유 저장소의 데이터를 백업 파일 내용으로 바꿉니다. 모든 사람에게 적용됩니다. 계속할까요?" : "지금 화면의 데이터를 백업 파일 내용으로 바꿉니다. 계속할까요?")) return;
+        const me = S.settings.me;
+        S = Object.assign(fresh(), s); S.settings = Object.assign(fresh().settings, s.settings || {}, { me });
+        save(); if (cloud.mode === "cloud") push(allRows(), true); toast("불러왔습니다."); render();
       } catch (e) { toast("이 프로그램의 백업 파일이 아닙니다."); }
     };
     fr.readAsText(file, "utf-8");
@@ -399,17 +485,19 @@
     else if (a === "revert") { ui.mode = ""; render(); }
     else if (a === "del") {
       const rec = S[key].find((x) => x.id === ui.sel[key]);
-      if (rec && confirm("이 항목을 삭제할까요?")) { S[key] = S[key].filter((x) => x !== rec); ui.sel[key] = null; save(); toast("삭제했습니다."); render(); }
+      if (rec && confirm("이 항목을 삭제할까요?")) { S[key] = S[key].filter((x) => x !== rec); ui.sel[key] = null; save(); removeRemote(key, rec.id); toast("삭제했습니다."); render(); }
     }
     else if (a === "settings") {
       ["auditDate", "cb", "me", "scope"].forEach((k) => { S.settings[k] = document.getElementById("s_" + k).value.trim(); });
-      save(); toast("설정을 저장했습니다."); render();
+      try { localStorage.setItem(ME_KEY, S.settings.me); } catch (e2) { /* noop */ }
+      save(); push([{ kind: "settings", id: 0, data: sharedSettings() }]); toast("설정을 저장했습니다."); render();
     }
     else if (a === "export") exportJSON();
     else if (a === "import") document.getElementById("importFile").click();
     else if (a === "reset") {
       if (confirm("입력한 내용을 모두 지우고 처음 상태로 돌아갑니다. 먼저 백업 파일을 내려받는 것을 권장합니다. 계속할까요?")) {
-        S = fresh(); save(); toast("초기화했습니다."); render();
+        const me = S.settings.me;
+        S = fresh(); S.settings.me = me; save(); if (cloud.mode === "cloud") push(allRows(), true); toast("초기화했습니다."); render();
       }
     }
   });
@@ -435,4 +523,12 @@
   const h0 = location.hash.slice(1);
   if (NAV.some(([k]) => k === h0)) ui.screen = h0;
   render();
+  pull(true).then(() => render());
+  // 다른 사람이 바꾼 내용을 30초마다 가져옵니다(입력 중일 때는 건너뜀).
+  setInterval(() => {
+    if ((cloud.mode === "cloud" || cloud.mode === "error") && !document.hidden && !isEditing()) pull(false).then((ok) => { if (ok && !isEditing()) render(); else renderSide(); });
+  }, 30000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && cloud.mode === "cloud" && !isEditing()) pull(false).then((ok) => { if (ok) render(); });
+  });
 })();

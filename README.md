@@ -15,9 +15,27 @@ Power Apps 앱(P-AUDIT_ISO45001.msapp)과 같은 6개 화면을 브라우저에�
 | 심사 당일 요약 | 심사일·인증기관·내 이름·적용범위 설정, 남은 빈출 항목, 백업 |
 
 ## 데이터 저장 방식
-- 입력한 내용은 **각자 브라우저의 localStorage에만** 저장됩니다. 서버나 저장소로 전송되지 않습니다.
-- 다른 PC·다른 사람과 이어서 쓰려면 *심사 당일 요약 → 백업 파일 내려받기/불러오기*를 사용합니다.
-- 저장소에 들어 있는 것은 기본 항목 목록(`data.js`)뿐이며 회사 실적 데이터는 들어 있지 않습니다.
+- **Supabase 연결 시(공유 모드)**: 모든 데이터가 Supabase `iso_records` 테이블에 저장되어 접속한 사람 모두가 같은 데이터를 봅니다. 다른 사람이 바꾼 내용은 30초마다 자동으로 반영됩니다. "내 이름"만 각자 브라우저에 저장됩니다.
+- **연결이 없을 때**: 예전처럼 각자 브라우저(localStorage)에만 저장됩니다.
+- 브라우저는 Supabase에 직접 접속하지 않습니다. Vercel 서버 함수(`api/records.js`)가 환경변수의 키로만 접근하므로 키가 화면에 노출되지 않습니다.
+- 백업 파일 내려받기/불러오기는 두 모드 모두에서 쓸 수 있습니다. 처음 Supabase에 연결하면 그 브라우저에 있던 데이터가 공유 저장소로 올라갑니다.
+
+## Supabase 연결 방법
+1. https://supabase.com 에서 New project 생성 (Region: Northeast Asia (Seoul) 권장)
+2. 왼쪽 **SQL Editor** → `supabase/schema.sql` 내용을 붙여넣고 **Run**
+3. **Project Settings → API Keys**(또는 Data API)에서 아래 두 값을 복사
+   - Project URL (예: `https://abcd1234.supabase.co`)
+   - secret 키(`sb_secret_…`) 또는 예전 `service_role` 키
+4. Vercel 프로젝트 → **Settings → Environment Variables**에 추가 (Production·Preview 모두 체크)
+
+| 이름 | 값 |
+|---|---|
+| `SUPABASE_URL` | Project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | secret / service_role 키 |
+| `APP_ACCESS_CODE` | (권장) 직원끼리 공유할 접속 코드. 처음 접속할 때 한 번 묻습니다 |
+
+5. Vercel **Deployments** → 최신 배포 ⋯ → **Redeploy**
+6. 사이트 왼쪽 아래에 "● 공유 저장소 연결됨"이 보이면 완료입니다.
 
 ## 로컬 실행
 ```
