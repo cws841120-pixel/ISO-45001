@@ -126,8 +126,9 @@
     "조치완료": "blue", "해당없음": "gray",
   };
   const pill = (s) => `<span class="pill p-${PILL[s] || "gray"}">${esc(s)}</span>`;
-  const GRADE = { "중부적합": "red", "경부적합": "orange", "관찰사항": "blue", "개선권고": "violet", "개선기회": "violet" };
-  const tag = (g) => `<span class="tag t-${GRADE[g] || "blue"}">${esc(g)}</span>`;
+  const GRADE = { "중부적합": "red", "경부적합": "orange", "관찰사항": "teal", "개선권고": "violet", "개선기회": "blue" };
+  const isOFI = (r) => r.grade === "개선기회";
+  const tag = (g) => `<span class="tag t-${GRADE[g] || "teal"}">${esc(g)}</span>`;
   const grpOf = (c) => (c && c !== "-" ? String(c).split(".")[0] : "-");
   // 공유 모드에서는 여러 사람이 동시에 등록해도 겹치지 않도록 시각 기반 번호를 씁니다.
   const nextId = (arr) => (cloud.mode === "cloud" ? Date.now() * 100 + Math.floor(Math.random() * 100) : arr.reduce((m, r) => Math.max(m, r.id), 0) + 1);
@@ -144,7 +145,8 @@
     const prepAll = S.prep.filter((r) => r.status !== "해당없음");
     const prepDone = prepAll.filter((r) => r.status === "완료").length;
     const t = today();
-    const ncOpen = S.nc.filter((r) => r.status !== "검증완료");
+    const ncAllOpen = S.nc.filter((r) => r.status !== "검증완료");
+    const ncOpen = ncAllOpen.filter((r) => !isOFI(r));
     return {
       prepPct: pct(prepDone, prepAll.length), prepDone, prepTotal: prepAll.length,
       prepFreqLeft: prepAll.filter((r) => r.freq && r.status !== "완료").length,
@@ -157,7 +159,9 @@
       qaDone: S.qa.filter((r) => r.status === "준비완료").length,
       qaNoOwner: S.qa.filter((r) => !r.owner).length,
       ncOpen: ncOpen.length,
-      ncLate: ncOpen.filter((r) => r.due && r.due < t).length,
+      ncLate: ncAllOpen.filter((r) => r.due && r.due < t).length,
+      ofiOpen: ncAllOpen.length - ncOpen.length,
+      ofiTotal: S.nc.filter(isOFI).length,
     };
   }
   function ring(p, color) {
@@ -239,10 +243,12 @@
     },
     nc: {
       title: "부적합·시정조치", unit: "건", newLabel: "지적사항",
-      sub: () => `사후심사는 직전 심사 지적사항의 조치 완료 확인부터 시작합니다 · 미종결 ${stats().ncOpen}건`,
+      sub: () => { const s = stats(); return `사후심사는 직전 심사 지적사항의 조치 완료 확인부터 시작합니다 · 미종결 부적합 ${s.ncOpen}건 · <span style="color:var(--blue);font-weight:700">개선기회 ${s.ofiOpen}건</span>`; },
       filters: [
         { k: "status", opts: () => [["", "전체 상태"], "조치중", "조치완료", "검증완료"] },
         { k: "source", opts: () => [["", "전체 출처"], "직전 심사", "내부심사", "자체 발견"] },
+        { k: "grade", opts: () => [["", "전체 등급"], ["__nc", "부적합만"], "개선기회", "중부적합", "경부적합", "관찰사항", "개선권고"],
+          test: (r, v) => !v || (v === "__nc" ? !isOFI(r) : r.grade === v) },
       ],
       search: ["description", "clause", "owner"], searchHint: "내용·조항·담당 검색",
       row: (r) => { const late = r.status !== "검증완료" && r.due && r.due < today();
@@ -323,7 +329,7 @@
       kpi("evid", s.evidPct, "#0EA5A4", "증빙 확보율", `보유 ${s.evidHave} · 보완 ${s.evidFix} · 없음 ${s.evidNone}`, `1년 경과 ${s.evidOld}`, !s.evidOld) +
       kpi("qa", s.qaPct, "#8B5CF6", "예상질문 준비율", `답변 완료 ${s.qaDone} / ${S.qa.length}문항`, `담당 미정 ${s.qaNoOwner}`, !s.qaNoOwner) +
       `<div class="card kpi" data-go="nc"><div class="ncring">${s.ncOpen}</div><div><div class="kl">미종결 부적합</div><div class="kv" style="color:var(--red)">${s.ncOpen}<small>건</small></div>` +
-      `<div class="ks">전체 ${S.nc.length}건 · 검증완료 ${S.nc.length - s.ncOpen}건</div><div class="kb ${s.ncLate ? "" : "ok"}">기한 초과 ${s.ncLate}</div></div></div></div>` +
+      `<div class="ks"><span style="color:var(--blue);font-weight:700">개선기회 미완료 ${s.ofiOpen}건</span> · 전체 ${S.nc.length}건</div><div class="kb ${s.ncLate ? "" : "ok"}">기한 초과 ${s.ncLate}</div></div></div></div>` +
       `<div class="grid2"><div class="card pane"><div class="pt">조항별 준비 현황<span>준비항목 완료율 · 누르면 해당 조항으로 이동</span></div>${bars}</div>` +
       `<div class="card pane"><div class="pt">${ui.homeMine ? "내 할 일" : "마감 임박 할 일"}<span>마감일 순 · 상위 6건</span></div>${todoH}</div></div>`;
   }
@@ -424,7 +430,7 @@
       `<div class="f"><label>내 이름</label><input id="s_me" value="${esc(st.me)}" placeholder="담당 칸에 쓰는 이름"></div>` +
       `<div class="f"><label>적용범위</label><textarea id="s_scope">${esc(st.scope)}</textarea></div>` +
       `<div class="f"><span></span><div><button class="btn pri" data-act="settings">설정 저장</button></div></div>` +
-      `<div class="pt" style="margin-top:18px">준비 상태 한눈에</div><div class="mini">준비항목 ${s.prepPct}%<br>증빙 확보 ${s.evidPct}%<br>예상질문 ${s.qaPct}%<br>미종결 부적합 ${s.ncOpen}건</div>` +
+      `<div class="pt" style="margin-top:18px">준비 상태 한눈에</div><div class="mini">준비항목 ${s.prepPct}%<br>증빙 확보 ${s.evidPct}%<br>예상질문 ${s.qaPct}%<br>미종결 부적합 ${s.ncOpen}건<br><span style="color:var(--blue)">개선기회 미완료 ${s.ofiOpen}건</span></div>` +
       `<div class="pt" style="margin-top:18px">데이터 백업</div>` +
       `<div class="toolbar"><button class="btn sm" data-act="export">백업 파일 내려받기</button><button class="btn sm" data-act="import">백업 파일 불러오기</button><button class="btn sm del" data-act="reset">처음 상태로 초기화</button></div>` +
       `<input type="file" id="importFile" accept="application/json,.json" hidden>` +
@@ -434,8 +440,8 @@
       `</div><div style="display:grid;gap:16px">` +
       `<div class="card pane"><div class="pt">아직 남은 빈출 항목<span>${left.length}건 · 준비항목과 증빙</span></div><div class="blist">` +
       (left.length ? left.map((x) => `<div class="brow" data-open="${x.key}:${x.r.id}"><span class="k">${x.k}</span><span class="c">${esc(x.c)}</span><span class="t">${esc(x.t)}</span>${pill(x.r.status)}</div>`).join("") : `<div class="empty">남은 항목이 없습니다.</div>`) +
-      `</div></div><div class="card pane"><div class="pt">미종결 부적합<span>${open.length}건</span></div><div class="blist">` +
-      (open.length ? open.map((r) => `<div class="brow" data-open="nc:${r.id}"><span class="k">${tag(r.grade)}</span><span class="c">${esc(r.clause)}</span><span class="t">${esc(r.description)}</span>${pill(r.status)}</div>`).join("") : `<div class="empty">미종결 부적합이 없습니다.</div>`) +
+      `</div></div><div class="card pane"><div class="pt">미종결 부적합·개선기회<span>${open.length}건</span></div><div class="blist">` +
+      (open.length ? open.map((r) => `<div class="brow" data-open="nc:${r.id}"><span class="k">${tag(r.grade)}</span><span class="c">${esc(r.clause)}</span><span class="t">${esc(r.description)}</span>${pill(r.status)}</div>`).join("") : `<div class="empty">미종결 부적합·개선기회가 없습니다.</div>`) +
       `</div></div></div></div>`;
   }
 
