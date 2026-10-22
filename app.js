@@ -126,7 +126,7 @@
     "조치완료": "blue", "해당없음": "gray",
   };
   const pill = (s) => `<span class="pill p-${PILL[s] || "gray"}">${esc(s)}</span>`;
-  const GRADE = { "중부적합": "red", "경부적합": "orange", "관찰사항": "blue", "개선권고": "violet" };
+  const GRADE = { "중부적합": "red", "경부적합": "orange", "관찰사항": "blue", "개선권고": "violet", "개선기회": "violet" };
   const tag = (g) => `<span class="tag t-${GRADE[g] || "blue"}">${esc(g)}</span>`;
   const grpOf = (c) => (c && c !== "-" ? String(c).split(".")[0] : "-");
   // 공유 모드에서는 여러 사람이 동시에 등록해도 겹치지 않도록 시각 기반 번호를 씁니다.
@@ -250,7 +250,7 @@
           `<div class="rb"><div class="rt">${esc(r.description)}</div><div class="rm ${late ? "late" : ""}">${esc(r.source)} · ${esc(r.owner || "담당 미정")} · 기한 ${esc(r.due || "—")}${late ? " (초과)" : ""}</div></div>${pill(r.status)}`; },
       head: () => "지적사항 상세",
       layout: [
-        [{ k: "source", label: "출처", opts: ["직전 심사", "내부심사", "자체 발견"] }, { k: "grade", label: "등급", opts: ["중부적합", "경부적합", "관찰사항", "개선권고"] }],
+        [{ k: "source", label: "출처", opts: ["직전 심사", "내부심사", "자체 발견"] }, { k: "grade", label: "등급", opts: ["중부적합", "경부적합", "관찰사항", "개선기회", "개선권고"] }],
         [{ k: "clause", label: "조항" }, { k: "status", label: "상태", opts: ["조치중", "조치완료", "검증완료"] }],
         [{ k: "description", label: "지적 내용", type: "area" }],
         [{ k: "cause", label: "근본 원인", type: "area" }],
