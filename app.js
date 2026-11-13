@@ -428,14 +428,14 @@
       `<div class="f"><label>심사일</label><input id="s_auditDate" type="date" value="${esc(st.auditDate)}"></div>` +
       `<div class="f"><label>인증기관</label><input id="s_cb" value="${esc(st.cb)}" placeholder="예: KSA"></div>` +
       `<div class="f"><label>내 이름</label><input id="s_me" value="${esc(st.me)}" placeholder="담당 칸에 쓰는 이름"></div>` +
-      `<div class="f"><label>적용범위</label><textarea id="s_scope">${esc(st.scope)}</textarea></div>` +
+      `<div class="f"><label>적용범위</label><div><textarea id="s_scope" placeholder="인증서에 적힌 적용범위 문구를 그대로 입력">${esc(st.scope)}</textarea>${st.scope ? "" : `<div class="ks" style="color:var(--red);margin-top:4px">적용범위가 비어 있습니다. 심사원이 4.3 확인 때 인증서 문구와 대조하므로 인증서 원문대로 입력하세요.</div>`}</div></div>` +
       `<div class="f"><span></span><div><button class="btn pri" data-act="settings">설정 저장</button></div></div>` +
       `<div class="pt" style="margin-top:18px">준비 상태 한눈에</div><div class="mini">준비항목 ${s.prepPct}%<br>증빙 확보 ${s.evidPct}%<br>예상질문 ${s.qaPct}%<br>미종결 부적합 ${s.ncOpen}건<br><span style="color:var(--blue)">개선기회 미완료 ${s.ofiOpen}건</span></div>` +
       `<div class="pt" style="margin-top:18px">데이터 백업</div>` +
-      `<div class="toolbar"><button class="btn sm" data-act="export">백업 파일 내려받기</button><button class="btn sm" data-act="import">백업 파일 불러오기</button><button class="btn sm del" data-act="reset">처음 상태로 초기화</button></div>` +
+      `<div class="toolbar"><button class="btn sm" data-act="export">백업 파일 내려받기</button><button class="btn sm" data-act="import">백업 파일 불러오기</button>${cloud.mode === "cloud" ? "" : `<button class="btn sm del" data-act="reset">처음 상태로 초기화</button>`}</div>` +
       `<input type="file" id="importFile" accept="application/json,.json" hidden>` +
       (cloud.mode === "cloud"
-        ? `<div class="note">※ 입력한 내용은 공유 저장소(Supabase)에 저장되어 접속한 모든 사람이 같은 데이터를 봅니다. "내 이름"만 이 브라우저에 따로 저장됩니다. 백업 불러오기와 초기화는 모든 사람의 데이터를 바꿉니다.</div>`
+        ? `<div class="note">※ 입력한 내용은 공유 저장소(Supabase)에 저장되어 접속한 모든 사람이 같은 데이터를 봅니다. "내 이름"만 이 브라우저에 따로 저장됩니다. 백업 불러오기는 모든 사람의 데이터를 바꿉니다. 공유 모드에서는 실수로 전체 데이터가 지워지지 않도록 '초기화'를 막아 두었습니다.</div>`
         : `<div class="note">※ 입력한 내용은 지금 쓰는 브라우저에만 저장되며 서버로 보내지 않습니다. 다른 PC나 다른 사람과 이어서 쓰려면 백업 파일을 내려받아 전달하고 불러오세요.${storageOk ? "" : " <b style='color:var(--red)'>현재 이 브라우저는 저장이 막혀 있습니다.</b>"}</div>`) +
       `</div><div style="display:grid;gap:16px">` +
       `<div class="card pane"><div class="pt">아직 남은 빈출 항목<span>${left.length}건 · 준비항목과 증빙</span></div><div class="blist">` +
@@ -501,6 +501,7 @@
     else if (a === "export") exportJSON();
     else if (a === "import") document.getElementById("importFile").click();
     else if (a === "reset") {
+      if (cloud.mode === "cloud") { toast("공유 모드에서는 초기화할 수 없습니다. 필요하면 백업 파일 불러오기를 쓰세요."); return; }
       if (confirm("입력한 내용을 모두 지우고 처음 상태로 돌아갑니다. 먼저 백업 파일을 내려받는 것을 권장합니다. 계속할까요?")) {
         const me = S.settings.me;
         S = fresh(); S.settings.me = me; save(); if (cloud.mode === "cloud") push(allRows(), true); toast("초기화했습니다."); render();
